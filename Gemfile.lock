@@ -17,6 +17,8 @@ GEM
     concurrent-ruby (1.1.7)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    faker (2.15.1)
+      i18n (>= 1.6, < 2)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -26,7 +28,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2020.0512)
+    mime-types-data (3.2020.1104)
     minitest (5.14.2)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -80,6 +82,7 @@ PLATFORMS
 
 DEPENDENCIES
   colorize
+  faker
   json
   pry
   require_all
