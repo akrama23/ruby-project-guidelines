@@ -11,6 +11,6 @@ ActiveRecord::Base.establish_connection(
 
 require_all 'lib'
 
-# PROMPT = TTY::Prompt.new 
+PROMPT = TTY::Prompt.new 
 
 ActiveRecord::Base.logger = nil
