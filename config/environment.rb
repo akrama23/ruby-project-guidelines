@@ -1,5 +1,8 @@
 require 'bundler'
 Bundler.require
+require 'json'
+require 'rest-client'
+
 
 ActiveRecord::Base.establish_connection(
     adapter: 'sqlite3', 
