@@ -53,6 +53,17 @@ song18 = Song.create(name: "Lonely" , artist_id: artist18.id)
 song19 = Song.create(name: "Before He Cheats" , artist_id: artist19.id)
 song20 = Song.create(name: "Don't Take The Girl" , artist_id: artist20.id)
 
+playlist1 = Playlist.create(name: "Rock Music", user_id: user1.id)
+playlist2 = Playlist.create(name: "Jazz Music", user_id: user1.id)
+playlist3 = Playlist.create(name: "Pop Music", user_id: user2.id)
+playlist4 = Playlist.create(name: "Hip Hop Music", user_id: user2.id)
+playlist5 = Playlist.create(name: "Heavy Metal Music", user_id: user3.id)
+playlist6 = Playlist.create(name: "Country Music", user_id: user3.id)
+playlist7 = Playlist.create(name: "Rap Music", user_id: user4.id)
+playlist8 = Playlist.create(name: "Blues Music", user_id: user4.id)
+playlist9 = Playlist.create(name: "R&B Music", user_id: user1.id)
+playlist10 = Playlist.create(name: "EDM Music", user_id: user2.id)
+
 songplaylist1 = SongPlaylist.create(song_id: song1.id, playlist_id: playlist7.id )
 songplaylist2 = SongPlaylist.create(song_id: song2.id, playlist_id: playlist9.id )
 songplaylist3 = SongPlaylist.create(song_id: song3.id, playlist_id: playlist3.id )
@@ -74,16 +85,7 @@ songplaylist18 = SongPlaylist.create(song_id: song18.id, playlist_id: playlist10
 songplaylist19 = SongPlaylist.create(song_id: song19.id, playlist_id: playlist6.id )
 songplaylist20 = SongPlaylist.create(song_id: song20.id, playlist_id: playlist6.id )
 
-playlist1 = Playlist.create(name: "Rock Music", user_id: user1.id)
-playlist2 = Playlist.create(name: "Jazz Music", user_id: user1.id)
-playlist3 = Playlist.create(name: "Pop Music", user_id: user2.id)
-playlist4 = Playlist.create(name: "Hip Hop Music", user_id: user2.id)
-playlist5 = Playlist.create(name: "Heavy Metal Music", user_id: user3.id)
-playlist6 = Playlist.create(name: "Country Music", user_id: user3.id)
-playlist7 = Playlist.create(name: "Rap Music", user_id: user4.id)
-playlist8 = Playlist.create(name: "Blues Music", user_id: user4.id)
-playlist9 = Playlist.create(name: "R&B Music", user_id: user1.id)
-playlist10 = Playlist.create(name: "EDM Music", user_id: user2.id)
+
 
 
 puts "Data seeded"
