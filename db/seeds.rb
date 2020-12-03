@@ -9,7 +9,7 @@ SongPlaylist.destroy_all
 user1 = User.create(username: "Ebyan")
 user2 = User.create(username: "Akram")
 user3 = User.create(username: "Bobby")
-user4 = User.create(username: "Dough")
+user4 = User.create(username: "Doug")
 
 artist1 = Artist.create(name: "Trippy Red")#rap
 artist2 = Artist.create(name: "Akon")#R&B
