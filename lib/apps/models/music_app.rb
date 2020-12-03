@@ -32,6 +32,7 @@ class MusicApp
             menu.choice "All Users"
             menu.choice "Find user by name"
             menu.choice "Create new user"
+            menu.choice "Delete a user"
             end 
         if user_option == "All Users"
            all_users
@@ -40,6 +41,9 @@ class MusicApp
             create_user
         end  
         if user_option == "Find user by name"
+            find_user_by_name
+        end 
+        if user_option == "Delete a user"
             find_user_by_name
         end 
     end 
@@ -56,17 +60,22 @@ class MusicApp
     end 
 
     def all_users
+        system("clear")
         user_input = PROMPT.select("select the user") do |menu|
             User.all.map {|user| menu.choice user.username}
-            
         end 
-       
         if User.find_by(username: user_input) 
-         user_playlist = PROMPT.select("select to view songs") do |menu| 
+         user_playlist = PROMPT.select("Here is a list of #{user_input}'playlists, click to see songs") do |menu| 
              User.find_by(username: user_input).playlists.map {|playlist| menu.choice playlist.name}
-              
+             user_id = Playlist.find_by(name: user_playlist).id
            end  
            binding.pry
+           if Playlist.find_by(name: user_playlist)
+                user_songs = PROMPT.select("Heres is #{user_input}'s #{user_playlist} playlist of songs") do 
+                   users_id = Playlist.find_by(user_id: user_playlist)
+                   playlist
+            end 
+           end 
         end 
     end 
 
