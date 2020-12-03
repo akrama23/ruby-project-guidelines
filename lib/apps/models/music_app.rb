@@ -3,7 +3,7 @@ class MusicApp
     attr_accessor :user
 
     def run 
-        system("clear")
+        sc
         welcome
         user
         while main_menu != 'exit'
@@ -13,7 +13,12 @@ class MusicApp
         ## call all the app methods in here
     end 
 
-    private 
+
+    
+
+    def sc
+        system("clear")
+    end 
 
     def welcome 
         puts "###### Hello & Welcome ######"
@@ -22,6 +27,7 @@ class MusicApp
         sleep(1)
         puts "##You can see list of Songs and their Artists##"  
         sleep(1) 
+        sc
     end 
         #user method ask user "enter your name" 
         #@user = User.find_or_create_by(username: userinput)
@@ -32,6 +38,7 @@ class MusicApp
             menu.choice "All Users"
             menu.choice "Find user by name"
             menu.choice "Create new user"
+            menu.choice "Update user"
             menu.choice "Delete a user"
             end 
         if user_option == "All Users"
@@ -43,6 +50,9 @@ class MusicApp
         if user_option == "Find user by name"
             find_user_by_name
         end 
+        if user_option == "Update user"
+            all_users
+         end 
         if user_option == "Delete a user"
             find_user_by_name
         end 
@@ -60,22 +70,41 @@ class MusicApp
     end 
 
     def all_users
-        system("clear")
+        sc
         user_input = PROMPT.select("select the user") do |menu|
             User.all.map {|user| menu.choice user.username}
         end 
+        sc
         if User.find_by(username: user_input) 
-         user_playlist = PROMPT.select("Here is a list of #{user_input}'playlists, click to see songs") do |menu| 
-             User.find_by(username: user_input).playlists.map {|playlist| menu.choice playlist.name}
-             user_id = Playlist.find_by(name: user_playlist).id
-           end  
-           binding.pry
+         user_playlist = PROMPT.select(" #{user_input}'playlists, click to see songs") do |menu| 
+             playlists = User.find_by(username: user_input).playlists.map {|playlist| playlist.name}
+            playlists.map {|playlist| menu.choice playlist}
+           
+            end  
+           sc
            if Playlist.find_by(name: user_playlist)
-                user_songs = PROMPT.select("Heres is #{user_input}'s #{user_playlist} playlist of songs") do 
-                   users_id = Playlist.find_by(user_id: user_playlist)
-                   playlist
-            end 
+                user_songs = PROMPT.select(" #{user_input}'s #{user_playlist} playlist of songs, select to see the artist") do |menu|
+                  userrr = Playlist.find_by(name: user_playlist).songs.map {|song| song.name}
+                  userrr.map{|user| menu.choice user} 
+                end 
            end 
+
+           if Song.find_by(name: user_songs)
+
+                user_artist = PROMPT.select("Would you like to see other songs by the artist?") do |menu|
+                    
+                     artist_name = Song.find_by(name: user_songs).artist.name
+                   menu.choice artist_name
+                   
+                end
+               if Artist.find_by(name: user_artist)
+                
+                  puts Artist.find_by(name: user_artist).songs.map {|song| song.name}
+                    
+                  
+                  binding.pry
+               end 
+           end
         end 
     end 
 
