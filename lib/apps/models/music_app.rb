@@ -6,10 +6,7 @@ class MusicApp
         sc
         welcome
         user
-        while main_menu != 'exit'
-        end 
-
-        end_of_app
+       
         ## call all the app methods in here
     end 
 
@@ -21,52 +18,66 @@ class MusicApp
     end 
 
     def welcome 
-        puts "###### Hello & Welcome ######"
+        puts "###################### Hello & Welcome #####################"
         sleep(1)
-        puts "###This is the Music App###"
+        puts "#################### This is the Music App ####################"
         sleep(1)
-        puts "##You can see list of Songs and their Artists##"  
-        sleep(1) 
+        puts "######### You can see list of Songs and their Artists #########"
+        sleep(1)
+        puts "###### You Can Start By Looking Through The Current Users ######"
+        sleep(1)
+        puts "### Then See Their Favorite Playlists & The Songs Within Them ###"
+        sleep(1)
+        puts "####### Then You'll See the Creative Artist Of The Song & #######"
+        sleep(1)
+        puts "####### Also See The List Of Other Music By That Artist ####### "
+        sleep(1)
+        puts "############ Or You Can Add Yourself To The Mix! #############"
+        sleep(1)
+        puts "#################### Have Fun & Enjoy ####################"  
+        sleep(2) 
         sc
     end 
         #user method ask user "enter your name" 
         #@user = User.find_or_create_by(username: userinput)
     def user 
-        puts "#### Please select from current users or create new user ####"
+        puts "#### Please Select From Current Users Or Create New User ####"
         
        user_option = PROMPT.select("select one of the options") do |menu|
             menu.choice "All Users"
-            menu.choice "Find user by name"
-            menu.choice "Create new user"
-            menu.choice "Update user"
-            menu.choice "Delete a user"
+            menu.choice "Create New User"
+            menu.choice "Update Users Name"
+            menu.choice "Delete A User"
+            menu.choice "See A List Of All Songs"
+            menu.choice "See A List Of All Playlists"
+            menu.choice "See List Of All Artists"
+            menu.choice "Exit MusicApp"
             end 
         if user_option == "All Users"
            all_users
         end 
-        if user_option == "Create new user"
+        if user_option == "Create New User"
             create_user
-        end  
-        if user_option == "Find user by name"
-            find_user_by_name
-        end 
-        if user_option == "Update user"
-            all_users
+        end   
+        if user_option == "Update Users Name"
+            update_user
          end 
-        if user_option == "Delete a user"
-            find_user_by_name
+        if user_option == "Delete A User"
+            delete_user
         end 
-    end 
-
-    def main_menu
-        PROMPT.select("What would you see?") do |menu|
-
-
-            # menu.choice "Choice A"
-            # menu.choice "Choice B"
-            # menu.choice "Choice C"
-            # menu.choice "Choice D"
+        if user_option == "See A List Of All Songs"
+            all_songs
         end 
+        if user_option == "See A List Of All Playlists"
+            all_playlists
+        end 
+        if user_option == "See List Of All Artists"
+            all_artists
+        end 
+        if user_option == "Exit MusicApp"
+            end_of_app
+        end 
+
     end 
 
     def all_users
@@ -99,33 +110,124 @@ class MusicApp
                 end
                if Artist.find_by(name: user_artist)
                 
-                  puts Artist.find_by(name: user_artist).songs.map {|song| song.name}
-                    
+                  Artist.find_by(name: user_artist).songs.map {|song| puts song.name}
+                  sleep(4)
+                    sc
+
+              return_choice = PROMPT.select("return to the all user menu or return to #{user_input}' music playlists") do |menu|
+                    menu.choice "Return to all user menu"
+
+               end 
+                    if return_choice = "Return to all user Menu"
+                        user
+                    end
                   
-                  binding.pry
+               
                end 
            end
         end 
     end 
 
-    def find_user_by_name
-        puts "please enter the name youre looking for:"
-        user_by_name = gets.chomp.downcase
-        user_by_name = user_by_name.capitalize
-        @user = User.find_by(username: user_by_name)
-        puts "now you can see #{@user.username}'s playlists"
-    end 
+    # def find_user_by_name
+    #     puts "please enter the name youre looking for:"
+    #     user_by_name = gets.chomp.downcase
+    #     user_by_name = user_by_name.capitalize
+    #     @user = User.find_by(username: user_by_name)
+    #     puts "now you can see #{@user.username}'s playlists"
+    # end 
 
     def create_user
-        puts "please enter your name"
+        puts "Please Enter Your Name"
         user_chomp = gets.chomp.downcase
         user_chomp = user_chomp.capitalize
         User.create(username: user_chomp)
-        puts "Welcome #{user_chomp}, would you like to create a playlist?"
+        puts "Welcome #{user_chomp}, You Now Are A User
+        , You Can Now Look For Your Name"
+        sleep(2)
+        puts ">>>>>Redirecting To Main User page <<<<<<  .........."
+        sleep(2)
+        sc
+        user
+    end 
+
+    def update_user
+        sc
+        user_input = PROMPT.select("Select The User") do |menu|
+            User.all.map {|user| menu.choice user.username}
+        end 
+         if User.find_by(username: user_input)
+            puts "Please Enter The New Name For The User :"
+            
+            new_name = gets.chomp.downcase
+            new_name = new_name.capitalize
+            current_name = User.find_by(username: user_input)
+            current_name.update(username: new_name)
+
+            puts "The New Name For The User Is: #{new_name}"
+            sleep(3)
+         end 
+        user
+    end 
+
+    def delete_user
+        sc
+        user_input = PROMPT.select("Select The User You Want To Delete") do |menu|
+            User.all.map {|user| menu.choice user.username}
+        end 
+        if User.find_by(username: user_input)
+            puts "You Are Now Deleting >>>>>>> #{user_input} .........."
+            picked_user = User.find_by(username: user_input)
+            picked_user.destroy
+            puts "Awesome, The User Has Been Deleted!"
+            puts ">>>>>Redirecting To Main User page <<<<<<  .........."
+            sleep(3)
+        end 
+        user
+    end 
+
+    def all_songs
+        puts "----Here's A List Of Songs Currently In Our MusicApp-----"
+        sleep(2)
+        Song.all.each {|song| puts ">>> Song Name: #{song.name}, By: #{song.artist.name}"}
+        puts ""
+        puts ""
+        puts ""
+        puts ">>>>>Redirecting To Main User page <<<<<<  .........."
+        sleep(5)
+        user 
+    end 
+
+    def all_playlists
+        puts "-----Here's A List Of All Of The Current Playlists In Our MusicApp-----"
+        Playlist.all.each {|playlist| puts ">>>> Playlist: #{playlist.name}"}
+        puts ""
+        puts ""
+        puts ""
+        puts ">>>>>Redirecting To Main User page <<<<<<  .........."
+        sleep(4)
+        user
+    end 
+
+    def all_artists
+        puts "--------Here's A List Of The Current Artist's In Our MusicApp-------"
+        sleep(1)
+        Artist.all.each {|artist| puts ">>>> Artist Or Band : #{artist.name}"}
+        puts ""
+        puts ""
+        puts ""
+        puts ">>>>>Redirecting To Main User page <<<<<<  .........."
+        sleep(5)
+        user 
+
     end 
 
     def end_of_app 
-        puts "Thank you, Have a Good Day!"
+        puts "Thank you For Checking Out Our MusicApp, Have a Good Day :)"
+        sleep(1)
+        puts "The Collaborators For This MusicApp :"
+        puts ">>>>>>> Ebyan Yusuf <<<<<<<"
+        puts ">>>>>>> Akram Alam <<<<<<<"
+        sleep(5)
     end 
 
 end 
