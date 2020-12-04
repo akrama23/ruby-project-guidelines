@@ -22,17 +22,17 @@ class MusicApp
         puts "#################### This is the Music App ####################"
         sleep(1)
         puts "######### You can see list of Songs and their Artists #########"
-        sleep(1)
+        sleep(2)
         puts "###### You Can Start By Looking Through The Current Users ######"
-        sleep(1)
+        sleep(2)
         puts "### Then See Their Favorite Playlists & The Songs Within Them ###"
-        sleep(1)
+        sleep(2)
         puts "####### Then You'll See the Creative Artist Of The Song & #######"
-        sleep(1)
+        sleep(2)
         puts "####### Also See The List Of Other Music By That Artist ####### "
-        sleep(1)
+        sleep(2)
         puts "############ Or You Can Add Yourself To The Mix! #############"
-        sleep(1)
+        sleep(2)
         puts "#################### Have Fun & Enjoy ####################"
         sleep(2) 
         sc
@@ -110,7 +110,7 @@ class MusicApp
                if Artist.find_by(name: user_artist)
                 
                   Artist.find_by(name: user_artist).songs.map {|song| puts song.name}
-                  sleep(4)
+                  sleep(6)
                     sc
 
               return_choice = @@prompt.select("return to the all user menu or return to #{user_input}' music playlists") do |menu|
@@ -140,9 +140,9 @@ class MusicApp
         user_chomp = gets.chomp.downcase
         user_chomp = user_chomp.capitalize
         User.create(username: user_chomp)
-        puts "Welcome #{user_chomp}, You Now Are A User
-        , You Can Now Look For Your Name"
-        sleep(2)
+        puts "Welcome #{user_chomp}, You Now Are A User"
+        puts ", You Can Now Look For Your Name"
+        sleep(3)
         puts ">>>>>Redirecting To Main User page <<<<<<  .........."
         sleep(2)
         sc
@@ -163,7 +163,8 @@ class MusicApp
             current_name.update(username: new_name)
 
             puts "The New Name For The User Is: #{new_name}"
-            sleep(3)
+            puts ">>>>>Redirecting To Main User page <<<<<<  .........."
+            sleep(4)
          end 
         user
     end 
