@@ -11,3 +11,4 @@ gem "json"
 gem "rest-client" 
 gem "faker"
 gem "rake"
+gem 'lolize'

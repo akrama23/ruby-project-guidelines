@@ -1,5 +1,6 @@
-class MusicApp
 
+class MusicApp
+    @@prompt = TTY::Prompt.new 
     attr_accessor :user
 
     def run 
@@ -10,8 +11,6 @@ class MusicApp
         ## call all the app methods in here
     end 
 
-
-    
 
     def sc
         system("clear")
@@ -34,7 +33,7 @@ class MusicApp
         sleep(1)
         puts "############ Or You Can Add Yourself To The Mix! #############"
         sleep(1)
-        puts "#################### Have Fun & Enjoy ####################"  
+        puts "#################### Have Fun & Enjoy ####################"
         sleep(2) 
         sc
     end 
@@ -42,8 +41,8 @@ class MusicApp
         #@user = User.find_or_create_by(username: userinput)
     def user 
         puts "#### Please Select From Current Users Or Create New User ####"
-        
-       user_option = PROMPT.select("select one of the options") do |menu|
+        sc
+       user_option = @@prompt.select("select one of the options") do |menu|
             menu.choice "All Users"
             menu.choice "Create New User"
             menu.choice "Update Users Name"
@@ -55,26 +54,26 @@ class MusicApp
             end 
         if user_option == "All Users"
            all_users
-        end 
-        if user_option == "Create New User"
+       
+        elsif user_option == "Create New User"
             create_user
-        end   
-        if user_option == "Update Users Name"
+         
+        elsif user_option == "Update Users Name"
             update_user
-         end 
-        if user_option == "Delete A User"
+        
+        elsif user_option == "Delete A User"
             delete_user
-        end 
-        if user_option == "See A List Of All Songs"
+       
+        elsif user_option == "See A List Of All Songs"
             all_songs
-        end 
-        if user_option == "See A List Of All Playlists"
+       
+        elsif user_option == "See A List Of All Playlists"
             all_playlists
-        end 
-        if user_option == "See List Of All Artists"
+       
+        elsif user_option == "See List Of All Artists"
             all_artists
-        end 
-        if user_option == "Exit MusicApp"
+       
+        else 
             end_of_app
         end 
 
@@ -82,19 +81,19 @@ class MusicApp
 
     def all_users
         sc
-        user_input = PROMPT.select("select the user") do |menu|
+        user_input = @@prompt.select("select the user") do |menu|
             User.all.map {|user| menu.choice user.username}
         end 
         sc
         if User.find_by(username: user_input) 
-         user_playlist = PROMPT.select(" #{user_input}'playlists, click to see songs") do |menu| 
+         user_playlist = @@prompt.select(" #{user_input}'playlists, click to see songs") do |menu| 
              playlists = User.find_by(username: user_input).playlists.map {|playlist| playlist.name}
             playlists.map {|playlist| menu.choice playlist}
            
             end  
            sc
            if Playlist.find_by(name: user_playlist)
-                user_songs = PROMPT.select(" #{user_input}'s #{user_playlist} playlist of songs, select to see the artist") do |menu|
+                user_songs = @@prompt.select(" #{user_input}'s #{user_playlist} playlist of songs, select to see the artist") do |menu|
                   userrr = Playlist.find_by(name: user_playlist).songs.map {|song| song.name}
                   userrr.map{|user| menu.choice user} 
                 end 
@@ -102,7 +101,7 @@ class MusicApp
 
            if Song.find_by(name: user_songs)
 
-                user_artist = PROMPT.select("Would you like to see other songs by the artist?") do |menu|
+                user_artist = @@prompt.select("Would you like to see other songs by the artist?") do |menu|
                     
                      artist_name = Song.find_by(name: user_songs).artist.name
                    menu.choice artist_name
@@ -114,7 +113,7 @@ class MusicApp
                   sleep(4)
                     sc
 
-              return_choice = PROMPT.select("return to the all user menu or return to #{user_input}' music playlists") do |menu|
+              return_choice = @@prompt.select("return to the all user menu or return to #{user_input}' music playlists") do |menu|
                     menu.choice "Return to all user menu"
 
                end 
@@ -152,7 +151,7 @@ class MusicApp
 
     def update_user
         sc
-        user_input = PROMPT.select("Select The User") do |menu|
+        user_input = @@prompt.select("Select The User") do |menu|
             User.all.map {|user| menu.choice user.username}
         end 
          if User.find_by(username: user_input)
@@ -171,7 +170,7 @@ class MusicApp
 
     def delete_user
         sc
-        user_input = PROMPT.select("Select The User You Want To Delete") do |menu|
+        user_input = @@prompt.select("Select The User You Want To Delete") do |menu|
             User.all.map {|user| menu.choice user.username}
         end 
         if User.find_by(username: user_input)
